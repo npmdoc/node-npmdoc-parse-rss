@@ -1,0 +1,275 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="https://github.com/nikezono/node-parse-rss">parse-rss (v1.0.3)</a>
+</h1>
+<h4>parse rss feeds</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.parse-rss">module parse-rss</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.parse-rss.parse-rss">
+            function <span class="apidocSignatureSpan"></span>parse-rss
+            <span class="apidocSignatureSpan">(url, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.parse-rss.parse_rss">
+            function <span class="apidocSignatureSpan">parse-rss.</span>parse_rss
+            <span class="apidocSignatureSpan">(url, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.parse-rss.toString">
+            function <span class="apidocSignatureSpan">parse-rss.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.parse-rss.toString">module parse-rss.toString</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.parse-rss.toString.toString">
+            function <span class="apidocSignatureSpan">parse-rss.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.parse-rss" id="apidoc.module.parse-rss">module parse-rss</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.parse-rss.parse-rss" id="apidoc.element.parse-rss.parse-rss">
+        function <span class="apidocSignatureSpan"></span>parse-rss
+        <span class="apidocSignatureSpan">(url, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">parse-rss = function (url, callback) {
+  var FeedParser, domain, options, request, rss;
+  FeedParser = require('feedparser');
+  request = require('request');
+  options = {
+    normalize: false,
+    addmeta: true,
+    feedurl: url
+  };
+  rss = [];
+  domain = require('domain').create();
+  domain.on('error', function(e) {
+    return callback(e, null);
+  });
+  return domain.run(function() {
+
+<span class="apidocCodeCommentSpan">    /* Module Initialize */
+</span>    var feedParser, req;
+    req = request(url);
+    feedParser = new FeedParser([options]);
+
+    /* REQUEST */
+    req.on('error', function(err) {
+      return callback(err, null);
+    });
+    req.on('response', function(res) {
+      var stream;
+      stream = this;
+      if (res.statusCode !== 200) {
+        return this.emit('error', new Error('Bad status code'));
+      }
+      return stream.pipe(feedParser);
+    });
+
+    /* FEEDPARSER */
+    feedParser.on('error', function(err) {
+      return callback(err, null);
+    });
+    feedParser.on('readable', function() {
+      var item, stream;
+      stream = this;
+      if (item = stream.read()) {
+        return rss.push(item);
+      }
+    });
+    return feedParser.on('end', function() {
+      if (rss.length === 0) {
+        return callback('no articles');
+      }
+      return callback(null, rss);
+    });
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.parse-rss.parse_rss" id="apidoc.element.parse-rss.parse_rss">
+        function <span class="apidocSignatureSpan">parse-rss.</span>parse_rss
+        <span class="apidocSignatureSpan">(url, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">parse_rss = function (url, callback) {
+  var FeedParser, domain, options, request, rss;
+  FeedParser = require('feedparser');
+  request = require('request');
+  options = {
+    normalize: false,
+    addmeta: true,
+    feedurl: url
+  };
+  rss = [];
+  domain = require('domain').create();
+  domain.on('error', function(e) {
+    return callback(e, null);
+  });
+  return domain.run(function() {
+
+<span class="apidocCodeCommentSpan">    /* Module Initialize */
+</span>    var feedParser, req;
+    req = request(url);
+    feedParser = new FeedParser([options]);
+
+    /* REQUEST */
+    req.on('error', function(err) {
+      return callback(err, null);
+    });
+    req.on('response', function(res) {
+      var stream;
+      stream = this;
+      if (res.statusCode !== 200) {
+        return this.emit('error', new Error('Bad status code'));
+      }
+      return stream.pipe(feedParser);
+    });
+
+    /* FEEDPARSER */
+    feedParser.on('error', function(err) {
+      return callback(err, null);
+    });
+    feedParser.on('readable', function() {
+      var item, stream;
+      stream = this;
+      if (item = stream.read()) {
+        return rss.push(item);
+      }
+    });
+    return feedParser.on('end', function() {
+      if (rss.length === 0) {
+        return callback('no articles');
+      }
+      return callback(null, rss);
+    });
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.parse-rss.toString" id="apidoc.element.parse-rss.toString">
+        function <span class="apidocSignatureSpan">parse-rss.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">toString = function () {
+    return text;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.parse-rss.toString" id="apidoc.module.parse-rss.toString">module parse-rss.toString</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.parse-rss.toString.toString" id="apidoc.element.parse-rss.toString.toString">
+        function <span class="apidocSignatureSpan">parse-rss.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
