@@ -1,4 +1,7 @@
-# api documentation for  [parse-rss (v1.0.3)](https://github.com/nikezono/node-parse-rss)  [![npm package](https://img.shields.io/npm/v/npmdoc-parse-rss.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-parse-rss) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-parse-rss.svg)](https://travis-ci.org/npmdoc/node-npmdoc-parse-rss)
+# npmdoc-parse-rss
+
+#### basic api documentation for  [parse-rss (v1.0.3)](https://github.com/nikezono/node-parse-rss)  [![npm package](https://img.shields.io/npm/v/npmdoc-parse-rss.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-parse-rss) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-parse-rss.svg)](https://travis-ci.org/npmdoc/node-npmdoc-parse-rss)
+
 #### parse rss feeds
 
 [![NPM](https://nodei.co/npm/parse-rss.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/parse-rss)
@@ -79,7 +82,8 @@
     "scripts": {
         "test": "grunt test"
     },
-    "version": "1.0.3"
+    "version": "1.0.3",
+    "bin": {}
 }
 ```
 
